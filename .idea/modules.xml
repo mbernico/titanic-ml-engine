@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/titanic-ml-engine.iml" filepath="$PROJECT_DIR$/.idea/titanic-ml-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/titanic-ml-engine.iml" filepath="$PROJECT_DIR$/.idea/titanic-ml-engine.iml" />
     </modules>
   </component>
 </project>
