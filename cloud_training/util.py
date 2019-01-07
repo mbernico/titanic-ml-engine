@@ -1,4 +1,4 @@
-import joblib
+import pickle
 import logging
 from google.cloud import storage
 import datetime
@@ -18,14 +18,13 @@ def configure_logging():
 
 
 def save_model_to_cloud(model, BUCKET_NAME):
-    model_name = 'model.joblib'
-    joblib.dump(model, model_name)
+    model_name = 'model.pkl'
+    with open(model_name,'wb')as handle:
+        pickle.dump(model, handle)
 
     # Upload the model to GCS
     bucket = storage.Client().bucket(BUCKET_NAME)
-    blob = bucket.blob('{}/{}'.format(
-        datetime.datetime.now().strftime('titanic_%Y%m%d_%H%M%S'),
-        model_name))
+    blob = bucket.blob('titanic_model/{}'.format(model_name))
     blob.upload_from_filename(model_name)
 
 
@@ -47,8 +46,8 @@ def cache_training_data(BUCKET_NAME,train_filename, val_filename, train_cache_na
 
 
 def load_data():
-    train = pd.read_csv('../data/titanic_train_temp.csv')
-    val = pd.read_csv('../data/titanic_val_temp.csv')
+    train = pd.read_csv('titanic_train_temp.csv')
+    val = pd.read_csv('titanic_val_temp.csv')
     data={}
     data['X_train'] = train.drop('Survived', axis=1)
     data['y_train'] = train['Survived']

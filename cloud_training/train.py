@@ -1,6 +1,12 @@
-from model import build_model
-from util import configure_logging, save_model_to_cloud, cache_training_data, load_data
+from .util import configure_logging, save_model_to_cloud, cache_training_data, load_data
 from sklearn.metrics import roc_auc_score
+from sklearn.ensemble import RandomForestClassifier
+
+
+def build_model(*args, **kwargs):
+    model = RandomForestClassifier(*args, **kwargs)
+    return model
+
 
 def main():
     BUCKET_NAME = 'sandbox-226501-mlengine'
@@ -16,7 +22,7 @@ def main():
     data = load_data()
     logger.info("loaded data into dataframes")
 
-    model = build_model()
+    model = build_model(n_estimators=100)
     logger.info("loaded model")
 
 
